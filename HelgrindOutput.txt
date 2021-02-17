@@ -1,0 +1,396 @@
+==17127== Helgrind, a thread error detector
+==17127== Copyright (C) 2007-2017, and GNU GPL'd, by OpenWorks LLP et al.
+==17127== Using Valgrind-3.16.1 and LibVEX; rerun with -h for copyright info
+==17127== Command: Source/SimulinkDemo
+==17127== 
+Running Simulink Model without Synchronization
+==17127== ---Thread-Announcement------------------------------------------
+==17127== 
+==17127== Thread #3 was created
+==17127==    at 0x4D12282: clone (in /usr/lib/libc-2.32.so)
+==17127==    by 0x48BB2D1: create_thread (in /usr/lib/libpthread-2.32.so)
+==17127==    by 0x48BCC10: pthread_create@@GLIBC_2.2.5 (in /usr/lib/libpthread-2.32.so)
+==17127==    by 0x4841687: pthread_create_WRK (hg_intercepts.c:425)
+==17127==    by 0x49A4EF9: __gthread_create (gthr-default.h:663)
+==17127==    by 0x49A4EF9: std::thread::_M_start_thread(std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >, void (*)()) (thread.cc:135)
+==17127==    by 0x10A7D3: std::thread::thread<main::{lambda()#2}, , void>(main::{lambda()#2}&&) (thread:149)
+==17127==    by 0x10A591: main (main.cpp:56)
+==17127== 
+==17127== ---Thread-Announcement------------------------------------------
+==17127== 
+==17127== Thread #2 was created
+==17127==    at 0x4D12282: clone (in /usr/lib/libc-2.32.so)
+==17127==    by 0x48BB2D1: create_thread (in /usr/lib/libpthread-2.32.so)
+==17127==    by 0x48BCC10: pthread_create@@GLIBC_2.2.5 (in /usr/lib/libpthread-2.32.so)
+==17127==    by 0x4841687: pthread_create_WRK (hg_intercepts.c:425)
+==17127==    by 0x49A4EF9: __gthread_create (gthr-default.h:663)
+==17127==    by 0x49A4EF9: std::thread::_M_start_thread(std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >, void (*)()) (thread.cc:135)
+==17127==    by 0x10A723: std::thread::thread<main::{lambda()#1}, , void>(main::{lambda()#1}&&) (thread:149)
+==17127==    by 0x10A55F: main (main.cpp:43)
+==17127== 
+==17127== ----------------------------------------------------------------
+==17127== 
+==17127== Possible data race during read of size 8 at 0x116370 by thread #3
+==17127== Locks held: none
+==17127==    at 0x10F752: Gain_Slow_step (Demo.c:139)
+==17127==    by 0x10F811: Demo_step (Demo.c:161)
+==17127==    by 0x10A44E: main::{lambda()#2}::operator()() const (main.cpp:48)
+==17127==    by 0x10AEEE: void std::__invoke_impl<void, main::{lambda()#2}>(std::__invoke_other, main::{lambda()#2}&&) (invoke.h:60)
+==17127==    by 0x10AE50: std::__invoke_result<main::{lambda()#2}>::type std::__invoke<main::{lambda()#2}>(std::__invoke_result&&, (main::{lambda()#2}&&)...) (invoke.h:95)
+==17127==    by 0x10ADD1: void std::thread::_Invoker<std::tuple<main::{lambda()#2}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (thread:264)
+==17127==    by 0x10AD89: std::thread::_Invoker<std::tuple<main::{lambda()#2}> >::operator()() (thread:271)
+==17127==    by 0x10AD4D: std::thread::_State_impl<std::thread::_Invoker<std::tuple<main::{lambda()#2}> > >::_M_run() (thread:215)
+==17127==    by 0x49A4C23: execute_native_thread_routine (thread.cc:80)
+==17127==    by 0x4841886: mythread_wrapper (hg_intercepts.c:387)
+==17127==    by 0x48BC3E8: start_thread (in /usr/lib/libpthread-2.32.so)
+==17127==    by 0x4D12292: clone (in /usr/lib/libc-2.32.so)
+==17127== 
+==17127== This conflicts with a previous write of size 8 by thread #2
+==17127== Locks held: none
+==17127==    at 0x10F6EE: Gain_Normal_step (Demo.c:122)
+==17127==    by 0x10F80A: Demo_step (Demo.c:157)
+==17127==    by 0x10A3CE: main::{lambda()#1}::operator()() const (main.cpp:35)
+==17127==    by 0x10AF39: void std::__invoke_impl<void, main::{lambda()#1}>(std::__invoke_other, main::{lambda()#1}&&) (invoke.h:60)
+==17127==    by 0x10AEA3: std::__invoke_result<main::{lambda()#1}>::type std::__invoke<main::{lambda()#1}>(std::__invoke_result&&, (main::{lambda()#1}&&)...) (invoke.h:95)
+==17127==    by 0x10ADFD: void std::thread::_Invoker<std::tuple<main::{lambda()#1}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (thread:264)
+==17127==    by 0x10ADA5: std::thread::_Invoker<std::tuple<main::{lambda()#1}> >::operator()() (thread:271)
+==17127==    by 0x10AD6D: std::thread::_State_impl<std::thread::_Invoker<std::tuple<main::{lambda()#1}> > >::_M_run() (thread:215)
+==17127==  Address 0x116370 is 48 bytes inside data symbol "Demo_DW"
+==17127== 
+==17127== ----------------------------------------------------------------
+==17127== 
+==17127== Possible data race during write of size 8 at 0x116358 by thread #3
+==17127== Locks held: none
+==17127==    at 0x10F7AB: Gain_Slow_step (Demo.c:146)
+==17127==    by 0x10F811: Demo_step (Demo.c:161)
+==17127==    by 0x10A44E: main::{lambda()#2}::operator()() const (main.cpp:48)
+==17127==    by 0x10AEEE: void std::__invoke_impl<void, main::{lambda()#2}>(std::__invoke_other, main::{lambda()#2}&&) (invoke.h:60)
+==17127==    by 0x10AE50: std::__invoke_result<main::{lambda()#2}>::type std::__invoke<main::{lambda()#2}>(std::__invoke_result&&, (main::{lambda()#2}&&)...) (invoke.h:95)
+==17127==    by 0x10ADD1: void std::thread::_Invoker<std::tuple<main::{lambda()#2}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (thread:264)
+==17127==    by 0x10AD89: std::thread::_Invoker<std::tuple<main::{lambda()#2}> >::operator()() (thread:271)
+==17127==    by 0x10AD4D: std::thread::_State_impl<std::thread::_Invoker<std::tuple<main::{lambda()#2}> > >::_M_run() (thread:215)
+==17127==    by 0x49A4C23: execute_native_thread_routine (thread.cc:80)
+==17127==    by 0x4841886: mythread_wrapper (hg_intercepts.c:387)
+==17127==    by 0x48BC3E8: start_thread (in /usr/lib/libpthread-2.32.so)
+==17127==    by 0x4D12292: clone (in /usr/lib/libc-2.32.so)
+==17127== 
+==17127== This conflicts with a previous read of size 8 by thread #2
+==17127== Locks held: none
+==17127==    at 0x10F67D: Gain_Normal_step (Demo.c:110)
+==17127==    by 0x10F80A: Demo_step (Demo.c:157)
+==17127==    by 0x10A3CE: main::{lambda()#1}::operator()() const (main.cpp:35)
+==17127==    by 0x10AF39: void std::__invoke_impl<void, main::{lambda()#1}>(std::__invoke_other, main::{lambda()#1}&&) (invoke.h:60)
+==17127==    by 0x10AEA3: std::__invoke_result<main::{lambda()#1}>::type std::__invoke<main::{lambda()#1}>(std::__invoke_result&&, (main::{lambda()#1}&&)...) (invoke.h:95)
+==17127==    by 0x10ADFD: void std::thread::_Invoker<std::tuple<main::{lambda()#1}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (thread:264)
+==17127==    by 0x10ADA5: std::thread::_Invoker<std::tuple<main::{lambda()#1}> >::operator()() (thread:271)
+==17127==    by 0x10AD6D: std::thread::_State_impl<std::thread::_Invoker<std::tuple<main::{lambda()#1}> > >::_M_run() (thread:215)
+==17127==  Address 0x116358 is 24 bytes inside data symbol "Demo_DW"
+==17127== 
+==17127== ----------------------------------------------------------------
+==17127== 
+==17127== Possible data race during write of size 8 at 0x116348 by thread #3
+==17127== Locks held: none
+==17127==    at 0x10F7E5: Gain_Slow_step (Demo.c:150)
+==17127==    by 0x10F811: Demo_step (Demo.c:161)
+==17127==    by 0x10A44E: main::{lambda()#2}::operator()() const (main.cpp:48)
+==17127==    by 0x10AEEE: void std::__invoke_impl<void, main::{lambda()#2}>(std::__invoke_other, main::{lambda()#2}&&) (invoke.h:60)
+==17127==    by 0x10AE50: std::__invoke_result<main::{lambda()#2}>::type std::__invoke<main::{lambda()#2}>(std::__invoke_result&&, (main::{lambda()#2}&&)...) (invoke.h:95)
+==17127==    by 0x10ADD1: void std::thread::_Invoker<std::tuple<main::{lambda()#2}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (thread:264)
+==17127==    by 0x10AD89: std::thread::_Invoker<std::tuple<main::{lambda()#2}> >::operator()() (thread:271)
+==17127==    by 0x10AD4D: std::thread::_State_impl<std::thread::_Invoker<std::tuple<main::{lambda()#2}> > >::_M_run() (thread:215)
+==17127==    by 0x49A4C23: execute_native_thread_routine (thread.cc:80)
+==17127==    by 0x4841886: mythread_wrapper (hg_intercepts.c:387)
+==17127==    by 0x48BC3E8: start_thread (in /usr/lib/libpthread-2.32.so)
+==17127==    by 0x4D12292: clone (in /usr/lib/libc-2.32.so)
+==17127== 
+==17127== This conflicts with a previous read of size 8 by thread #2
+==17127== Locks held: none
+==17127==    at 0x10F604: Gain_Normal_step (Demo.c:94)
+==17127==    by 0x10F80A: Demo_step (Demo.c:157)
+==17127==    by 0x10A3CE: main::{lambda()#1}::operator()() const (main.cpp:35)
+==17127==    by 0x10AF39: void std::__invoke_impl<void, main::{lambda()#1}>(std::__invoke_other, main::{lambda()#1}&&) (invoke.h:60)
+==17127==    by 0x10AEA3: std::__invoke_result<main::{lambda()#1}>::type std::__invoke<main::{lambda()#1}>(std::__invoke_result&&, (main::{lambda()#1}&&)...) (invoke.h:95)
+==17127==    by 0x10ADFD: void std::thread::_Invoker<std::tuple<main::{lambda()#1}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (thread:264)
+==17127==    by 0x10ADA5: std::thread::_Invoker<std::tuple<main::{lambda()#1}> >::operator()() (thread:271)
+==17127==    by 0x10AD6D: std::thread::_State_impl<std::thread::_Invoker<std::tuple<main::{lambda()#1}> > >::_M_run() (thread:215)
+==17127==  Address 0x116348 is 8 bytes inside data symbol "Demo_DW"
+==17127== 
+==17127== ----------------------------------------------------------------
+==17127== 
+==17127== Possible data race during read of size 8 at 0x116350 by thread #2
+==17127== Locks held: none
+==17127==    at 0x10F604: Gain_Normal_step (Demo.c:94)
+==17127==    by 0x10F80A: Demo_step (Demo.c:157)
+==17127==    by 0x10A3CE: main::{lambda()#1}::operator()() const (main.cpp:35)
+==17127==    by 0x10AF39: void std::__invoke_impl<void, main::{lambda()#1}>(std::__invoke_other, main::{lambda()#1}&&) (invoke.h:60)
+==17127==    by 0x10AEA3: std::__invoke_result<main::{lambda()#1}>::type std::__invoke<main::{lambda()#1}>(std::__invoke_result&&, (main::{lambda()#1}&&)...) (invoke.h:95)
+==17127==    by 0x10ADFD: void std::thread::_Invoker<std::tuple<main::{lambda()#1}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (thread:264)
+==17127==    by 0x10ADA5: std::thread::_Invoker<std::tuple<main::{lambda()#1}> >::operator()() (thread:271)
+==17127==    by 0x10AD6D: std::thread::_State_impl<std::thread::_Invoker<std::tuple<main::{lambda()#1}> > >::_M_run() (thread:215)
+==17127==    by 0x49A4C23: execute_native_thread_routine (thread.cc:80)
+==17127==    by 0x4841886: mythread_wrapper (hg_intercepts.c:387)
+==17127==    by 0x48BC3E8: start_thread (in /usr/lib/libpthread-2.32.so)
+==17127==    by 0x4D12292: clone (in /usr/lib/libc-2.32.so)
+==17127== 
+==17127== This conflicts with a previous write of size 8 by thread #3
+==17127== Locks held: none
+==17127==    at 0x10F7E5: Gain_Slow_step (Demo.c:150)
+==17127==    by 0x10F811: Demo_step (Demo.c:161)
+==17127==    by 0x10A44E: main::{lambda()#2}::operator()() const (main.cpp:48)
+==17127==    by 0x10AEEE: void std::__invoke_impl<void, main::{lambda()#2}>(std::__invoke_other, main::{lambda()#2}&&) (invoke.h:60)
+==17127==    by 0x10AE50: std::__invoke_result<main::{lambda()#2}>::type std::__invoke<main::{lambda()#2}>(std::__invoke_result&&, (main::{lambda()#2}&&)...) (invoke.h:95)
+==17127==    by 0x10ADD1: void std::thread::_Invoker<std::tuple<main::{lambda()#2}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (thread:264)
+==17127==    by 0x10AD89: std::thread::_Invoker<std::tuple<main::{lambda()#2}> >::operator()() (thread:271)
+==17127==    by 0x10AD4D: std::thread::_State_impl<std::thread::_Invoker<std::tuple<main::{lambda()#2}> > >::_M_run() (thread:215)
+==17127==  Address 0x116350 is 16 bytes inside data symbol "Demo_DW"
+==17127== 
+==17127== ----------------------------------------------------------------
+==17127== 
+==17127== Possible data race during read of size 8 at 0x116360 by thread #2
+==17127== Locks held: none
+==17127==    at 0x10F67D: Gain_Normal_step (Demo.c:110)
+==17127==    by 0x10F80A: Demo_step (Demo.c:157)
+==17127==    by 0x10A3CE: main::{lambda()#1}::operator()() const (main.cpp:35)
+==17127==    by 0x10AF39: void std::__invoke_impl<void, main::{lambda()#1}>(std::__invoke_other, main::{lambda()#1}&&) (invoke.h:60)
+==17127==    by 0x10AEA3: std::__invoke_result<main::{lambda()#1}>::type std::__invoke<main::{lambda()#1}>(std::__invoke_result&&, (main::{lambda()#1}&&)...) (invoke.h:95)
+==17127==    by 0x10ADFD: void std::thread::_Invoker<std::tuple<main::{lambda()#1}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (thread:264)
+==17127==    by 0x10ADA5: std::thread::_Invoker<std::tuple<main::{lambda()#1}> >::operator()() (thread:271)
+==17127==    by 0x10AD6D: std::thread::_State_impl<std::thread::_Invoker<std::tuple<main::{lambda()#1}> > >::_M_run() (thread:215)
+==17127==    by 0x49A4C23: execute_native_thread_routine (thread.cc:80)
+==17127==    by 0x4841886: mythread_wrapper (hg_intercepts.c:387)
+==17127==    by 0x48BC3E8: start_thread (in /usr/lib/libpthread-2.32.so)
+==17127==    by 0x4D12292: clone (in /usr/lib/libc-2.32.so)
+==17127== 
+==17127== This conflicts with a previous write of size 8 by thread #3
+==17127== Locks held: none
+==17127==    at 0x10F7AB: Gain_Slow_step (Demo.c:146)
+==17127==    by 0x10F811: Demo_step (Demo.c:161)
+==17127==    by 0x10A44E: main::{lambda()#2}::operator()() const (main.cpp:48)
+==17127==    by 0x10AEEE: void std::__invoke_impl<void, main::{lambda()#2}>(std::__invoke_other, main::{lambda()#2}&&) (invoke.h:60)
+==17127==    by 0x10AE50: std::__invoke_result<main::{lambda()#2}>::type std::__invoke<main::{lambda()#2}>(std::__invoke_result&&, (main::{lambda()#2}&&)...) (invoke.h:95)
+==17127==    by 0x10ADD1: void std::thread::_Invoker<std::tuple<main::{lambda()#2}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (thread:264)
+==17127==    by 0x10AD89: std::thread::_Invoker<std::tuple<main::{lambda()#2}> >::operator()() (thread:271)
+==17127==    by 0x10AD4D: std::thread::_State_impl<std::thread::_Invoker<std::tuple<main::{lambda()#2}> > >::_M_run() (thread:215)
+==17127==  Address 0x116360 is 32 bytes inside data symbol "Demo_DW"
+==17127== 
+==17127== ----------------------------------------------------------------
+==17127== 
+==17127== Possible data race during write of size 8 at 0x116368 by thread #2
+==17127== Locks held: none
+==17127==    at 0x10F6EE: Gain_Normal_step (Demo.c:122)
+==17127==    by 0x10F80A: Demo_step (Demo.c:157)
+==17127==    by 0x10A3CE: main::{lambda()#1}::operator()() const (main.cpp:35)
+==17127==    by 0x10AF39: void std::__invoke_impl<void, main::{lambda()#1}>(std::__invoke_other, main::{lambda()#1}&&) (invoke.h:60)
+==17127==    by 0x10AEA3: std::__invoke_result<main::{lambda()#1}>::type std::__invoke<main::{lambda()#1}>(std::__invoke_result&&, (main::{lambda()#1}&&)...) (invoke.h:95)
+==17127==    by 0x10ADFD: void std::thread::_Invoker<std::tuple<main::{lambda()#1}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (thread:264)
+==17127==    by 0x10ADA5: std::thread::_Invoker<std::tuple<main::{lambda()#1}> >::operator()() (thread:271)
+==17127==    by 0x10AD6D: std::thread::_State_impl<std::thread::_Invoker<std::tuple<main::{lambda()#1}> > >::_M_run() (thread:215)
+==17127==    by 0x49A4C23: execute_native_thread_routine (thread.cc:80)
+==17127==    by 0x4841886: mythread_wrapper (hg_intercepts.c:387)
+==17127==    by 0x48BC3E8: start_thread (in /usr/lib/libpthread-2.32.so)
+==17127==    by 0x4D12292: clone (in /usr/lib/libc-2.32.so)
+==17127== 
+==17127== This conflicts with a previous read of size 8 by thread #3
+==17127== Locks held: none
+==17127==    at 0x10F752: Gain_Slow_step (Demo.c:139)
+==17127==    by 0x10F811: Demo_step (Demo.c:161)
+==17127==    by 0x10A44E: main::{lambda()#2}::operator()() const (main.cpp:48)
+==17127==    by 0x10AEEE: void std::__invoke_impl<void, main::{lambda()#2}>(std::__invoke_other, main::{lambda()#2}&&) (invoke.h:60)
+==17127==    by 0x10AE50: std::__invoke_result<main::{lambda()#2}>::type std::__invoke<main::{lambda()#2}>(std::__invoke_result&&, (main::{lambda()#2}&&)...) (invoke.h:95)
+==17127==    by 0x10ADD1: void std::thread::_Invoker<std::tuple<main::{lambda()#2}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (thread:264)
+==17127==    by 0x10AD89: std::thread::_Invoker<std::tuple<main::{lambda()#2}> >::operator()() (thread:271)
+==17127==    by 0x10AD4D: std::thread::_State_impl<std::thread::_Invoker<std::tuple<main::{lambda()#2}> > >::_M_run() (thread:215)
+==17127==  Address 0x116368 is 40 bytes inside data symbol "Demo_DW"
+==17127== 
+Waiting for threads to terminate
+==17127== 
+==17127== Use --history-level=approx or =none to gain increased speed, at
+==17127== the cost of reduced accuracy of conflicting-access information
+==17127== ERROR SUMMARY: 822 errors from 6 contexts (suppressed: 0 from 0)
+==17127== 
+==17127== 98 errors in context 1 of 6:
+==17127== ----------------------------------------------------------------
+==17127== 
+==17127== Possible data race during write of size 8 at 0x116348 by thread #3
+==17127== Locks held: none
+==17127==    at 0x10F7E5: Gain_Slow_step (Demo.c:150)
+==17127==    by 0x10F811: Demo_step (Demo.c:161)
+==17127==    by 0x10A44E: main::{lambda()#2}::operator()() const (main.cpp:48)
+==17127==    by 0x10AEEE: void std::__invoke_impl<void, main::{lambda()#2}>(std::__invoke_other, main::{lambda()#2}&&) (invoke.h:60)
+==17127==    by 0x10AE50: std::__invoke_result<main::{lambda()#2}>::type std::__invoke<main::{lambda()#2}>(std::__invoke_result&&, (main::{lambda()#2}&&)...) (invoke.h:95)
+==17127==    by 0x10ADD1: void std::thread::_Invoker<std::tuple<main::{lambda()#2}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (thread:264)
+==17127==    by 0x10AD89: std::thread::_Invoker<std::tuple<main::{lambda()#2}> >::operator()() (thread:271)
+==17127==    by 0x10AD4D: std::thread::_State_impl<std::thread::_Invoker<std::tuple<main::{lambda()#2}> > >::_M_run() (thread:215)
+==17127==    by 0x49A4C23: execute_native_thread_routine (thread.cc:80)
+==17127==    by 0x4841886: mythread_wrapper (hg_intercepts.c:387)
+==17127==    by 0x48BC3E8: start_thread (in /usr/lib/libpthread-2.32.so)
+==17127==    by 0x4D12292: clone (in /usr/lib/libc-2.32.so)
+==17127== 
+==17127== This conflicts with a previous read of size 8 by thread #2
+==17127== Locks held: none
+==17127==    at 0x10F604: Gain_Normal_step (Demo.c:94)
+==17127==    by 0x10F80A: Demo_step (Demo.c:157)
+==17127==    by 0x10A3CE: main::{lambda()#1}::operator()() const (main.cpp:35)
+==17127==    by 0x10AF39: void std::__invoke_impl<void, main::{lambda()#1}>(std::__invoke_other, main::{lambda()#1}&&) (invoke.h:60)
+==17127==    by 0x10AEA3: std::__invoke_result<main::{lambda()#1}>::type std::__invoke<main::{lambda()#1}>(std::__invoke_result&&, (main::{lambda()#1}&&)...) (invoke.h:95)
+==17127==    by 0x10ADFD: void std::thread::_Invoker<std::tuple<main::{lambda()#1}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (thread:264)
+==17127==    by 0x10ADA5: std::thread::_Invoker<std::tuple<main::{lambda()#1}> >::operator()() (thread:271)
+==17127==    by 0x10AD6D: std::thread::_State_impl<std::thread::_Invoker<std::tuple<main::{lambda()#1}> > >::_M_run() (thread:215)
+==17127==  Address 0x116348 is 8 bytes inside data symbol "Demo_DW"
+==17127== 
+==17127== 
+==17127== 98 errors in context 2 of 6:
+==17127== ----------------------------------------------------------------
+==17127== 
+==17127== Possible data race during write of size 8 at 0x116358 by thread #3
+==17127== Locks held: none
+==17127==    at 0x10F7AB: Gain_Slow_step (Demo.c:146)
+==17127==    by 0x10F811: Demo_step (Demo.c:161)
+==17127==    by 0x10A44E: main::{lambda()#2}::operator()() const (main.cpp:48)
+==17127==    by 0x10AEEE: void std::__invoke_impl<void, main::{lambda()#2}>(std::__invoke_other, main::{lambda()#2}&&) (invoke.h:60)
+==17127==    by 0x10AE50: std::__invoke_result<main::{lambda()#2}>::type std::__invoke<main::{lambda()#2}>(std::__invoke_result&&, (main::{lambda()#2}&&)...) (invoke.h:95)
+==17127==    by 0x10ADD1: void std::thread::_Invoker<std::tuple<main::{lambda()#2}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (thread:264)
+==17127==    by 0x10AD89: std::thread::_Invoker<std::tuple<main::{lambda()#2}> >::operator()() (thread:271)
+==17127==    by 0x10AD4D: std::thread::_State_impl<std::thread::_Invoker<std::tuple<main::{lambda()#2}> > >::_M_run() (thread:215)
+==17127==    by 0x49A4C23: execute_native_thread_routine (thread.cc:80)
+==17127==    by 0x4841886: mythread_wrapper (hg_intercepts.c:387)
+==17127==    by 0x48BC3E8: start_thread (in /usr/lib/libpthread-2.32.so)
+==17127==    by 0x4D12292: clone (in /usr/lib/libc-2.32.so)
+==17127== 
+==17127== This conflicts with a previous read of size 8 by thread #2
+==17127== Locks held: none
+==17127==    at 0x10F67D: Gain_Normal_step (Demo.c:110)
+==17127==    by 0x10F80A: Demo_step (Demo.c:157)
+==17127==    by 0x10A3CE: main::{lambda()#1}::operator()() const (main.cpp:35)
+==17127==    by 0x10AF39: void std::__invoke_impl<void, main::{lambda()#1}>(std::__invoke_other, main::{lambda()#1}&&) (invoke.h:60)
+==17127==    by 0x10AEA3: std::__invoke_result<main::{lambda()#1}>::type std::__invoke<main::{lambda()#1}>(std::__invoke_result&&, (main::{lambda()#1}&&)...) (invoke.h:95)
+==17127==    by 0x10ADFD: void std::thread::_Invoker<std::tuple<main::{lambda()#1}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (thread:264)
+==17127==    by 0x10ADA5: std::thread::_Invoker<std::tuple<main::{lambda()#1}> >::operator()() (thread:271)
+==17127==    by 0x10AD6D: std::thread::_State_impl<std::thread::_Invoker<std::tuple<main::{lambda()#1}> > >::_M_run() (thread:215)
+==17127==  Address 0x116358 is 24 bytes inside data symbol "Demo_DW"
+==17127== 
+==17127== 
+==17127== 98 errors in context 3 of 6:
+==17127== ----------------------------------------------------------------
+==17127== 
+==17127== Possible data race during read of size 8 at 0x116370 by thread #3
+==17127== Locks held: none
+==17127==    at 0x10F752: Gain_Slow_step (Demo.c:139)
+==17127==    by 0x10F811: Demo_step (Demo.c:161)
+==17127==    by 0x10A44E: main::{lambda()#2}::operator()() const (main.cpp:48)
+==17127==    by 0x10AEEE: void std::__invoke_impl<void, main::{lambda()#2}>(std::__invoke_other, main::{lambda()#2}&&) (invoke.h:60)
+==17127==    by 0x10AE50: std::__invoke_result<main::{lambda()#2}>::type std::__invoke<main::{lambda()#2}>(std::__invoke_result&&, (main::{lambda()#2}&&)...) (invoke.h:95)
+==17127==    by 0x10ADD1: void std::thread::_Invoker<std::tuple<main::{lambda()#2}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (thread:264)
+==17127==    by 0x10AD89: std::thread::_Invoker<std::tuple<main::{lambda()#2}> >::operator()() (thread:271)
+==17127==    by 0x10AD4D: std::thread::_State_impl<std::thread::_Invoker<std::tuple<main::{lambda()#2}> > >::_M_run() (thread:215)
+==17127==    by 0x49A4C23: execute_native_thread_routine (thread.cc:80)
+==17127==    by 0x4841886: mythread_wrapper (hg_intercepts.c:387)
+==17127==    by 0x48BC3E8: start_thread (in /usr/lib/libpthread-2.32.so)
+==17127==    by 0x4D12292: clone (in /usr/lib/libc-2.32.so)
+==17127== 
+==17127== This conflicts with a previous write of size 8 by thread #2
+==17127== Locks held: none
+==17127==    at 0x10F6EE: Gain_Normal_step (Demo.c:122)
+==17127==    by 0x10F80A: Demo_step (Demo.c:157)
+==17127==    by 0x10A3CE: main::{lambda()#1}::operator()() const (main.cpp:35)
+==17127==    by 0x10AF39: void std::__invoke_impl<void, main::{lambda()#1}>(std::__invoke_other, main::{lambda()#1}&&) (invoke.h:60)
+==17127==    by 0x10AEA3: std::__invoke_result<main::{lambda()#1}>::type std::__invoke<main::{lambda()#1}>(std::__invoke_result&&, (main::{lambda()#1}&&)...) (invoke.h:95)
+==17127==    by 0x10ADFD: void std::thread::_Invoker<std::tuple<main::{lambda()#1}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (thread:264)
+==17127==    by 0x10ADA5: std::thread::_Invoker<std::tuple<main::{lambda()#1}> >::operator()() (thread:271)
+==17127==    by 0x10AD6D: std::thread::_State_impl<std::thread::_Invoker<std::tuple<main::{lambda()#1}> > >::_M_run() (thread:215)
+==17127==  Address 0x116370 is 48 bytes inside data symbol "Demo_DW"
+==17127== 
+==17127== 
+==17127== 176 errors in context 4 of 6:
+==17127== ----------------------------------------------------------------
+==17127== 
+==17127== Possible data race during write of size 8 at 0x116368 by thread #2
+==17127== Locks held: none
+==17127==    at 0x10F6EE: Gain_Normal_step (Demo.c:122)
+==17127==    by 0x10F80A: Demo_step (Demo.c:157)
+==17127==    by 0x10A3CE: main::{lambda()#1}::operator()() const (main.cpp:35)
+==17127==    by 0x10AF39: void std::__invoke_impl<void, main::{lambda()#1}>(std::__invoke_other, main::{lambda()#1}&&) (invoke.h:60)
+==17127==    by 0x10AEA3: std::__invoke_result<main::{lambda()#1}>::type std::__invoke<main::{lambda()#1}>(std::__invoke_result&&, (main::{lambda()#1}&&)...) (invoke.h:95)
+==17127==    by 0x10ADFD: void std::thread::_Invoker<std::tuple<main::{lambda()#1}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (thread:264)
+==17127==    by 0x10ADA5: std::thread::_Invoker<std::tuple<main::{lambda()#1}> >::operator()() (thread:271)
+==17127==    by 0x10AD6D: std::thread::_State_impl<std::thread::_Invoker<std::tuple<main::{lambda()#1}> > >::_M_run() (thread:215)
+==17127==    by 0x49A4C23: execute_native_thread_routine (thread.cc:80)
+==17127==    by 0x4841886: mythread_wrapper (hg_intercepts.c:387)
+==17127==    by 0x48BC3E8: start_thread (in /usr/lib/libpthread-2.32.so)
+==17127==    by 0x4D12292: clone (in /usr/lib/libc-2.32.so)
+==17127== 
+==17127== This conflicts with a previous read of size 8 by thread #3
+==17127== Locks held: none
+==17127==    at 0x10F752: Gain_Slow_step (Demo.c:139)
+==17127==    by 0x10F811: Demo_step (Demo.c:161)
+==17127==    by 0x10A44E: main::{lambda()#2}::operator()() const (main.cpp:48)
+==17127==    by 0x10AEEE: void std::__invoke_impl<void, main::{lambda()#2}>(std::__invoke_other, main::{lambda()#2}&&) (invoke.h:60)
+==17127==    by 0x10AE50: std::__invoke_result<main::{lambda()#2}>::type std::__invoke<main::{lambda()#2}>(std::__invoke_result&&, (main::{lambda()#2}&&)...) (invoke.h:95)
+==17127==    by 0x10ADD1: void std::thread::_Invoker<std::tuple<main::{lambda()#2}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (thread:264)
+==17127==    by 0x10AD89: std::thread::_Invoker<std::tuple<main::{lambda()#2}> >::operator()() (thread:271)
+==17127==    by 0x10AD4D: std::thread::_State_impl<std::thread::_Invoker<std::tuple<main::{lambda()#2}> > >::_M_run() (thread:215)
+==17127==  Address 0x116368 is 40 bytes inside data symbol "Demo_DW"
+==17127== 
+==17127== 
+==17127== 176 errors in context 5 of 6:
+==17127== ----------------------------------------------------------------
+==17127== 
+==17127== Possible data race during read of size 8 at 0x116360 by thread #2
+==17127== Locks held: none
+==17127==    at 0x10F67D: Gain_Normal_step (Demo.c:110)
+==17127==    by 0x10F80A: Demo_step (Demo.c:157)
+==17127==    by 0x10A3CE: main::{lambda()#1}::operator()() const (main.cpp:35)
+==17127==    by 0x10AF39: void std::__invoke_impl<void, main::{lambda()#1}>(std::__invoke_other, main::{lambda()#1}&&) (invoke.h:60)
+==17127==    by 0x10AEA3: std::__invoke_result<main::{lambda()#1}>::type std::__invoke<main::{lambda()#1}>(std::__invoke_result&&, (main::{lambda()#1}&&)...) (invoke.h:95)
+==17127==    by 0x10ADFD: void std::thread::_Invoker<std::tuple<main::{lambda()#1}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (thread:264)
+==17127==    by 0x10ADA5: std::thread::_Invoker<std::tuple<main::{lambda()#1}> >::operator()() (thread:271)
+==17127==    by 0x10AD6D: std::thread::_State_impl<std::thread::_Invoker<std::tuple<main::{lambda()#1}> > >::_M_run() (thread:215)
+==17127==    by 0x49A4C23: execute_native_thread_routine (thread.cc:80)
+==17127==    by 0x4841886: mythread_wrapper (hg_intercepts.c:387)
+==17127==    by 0x48BC3E8: start_thread (in /usr/lib/libpthread-2.32.so)
+==17127==    by 0x4D12292: clone (in /usr/lib/libc-2.32.so)
+==17127== 
+==17127== This conflicts with a previous write of size 8 by thread #3
+==17127== Locks held: none
+==17127==    at 0x10F7AB: Gain_Slow_step (Demo.c:146)
+==17127==    by 0x10F811: Demo_step (Demo.c:161)
+==17127==    by 0x10A44E: main::{lambda()#2}::operator()() const (main.cpp:48)
+==17127==    by 0x10AEEE: void std::__invoke_impl<void, main::{lambda()#2}>(std::__invoke_other, main::{lambda()#2}&&) (invoke.h:60)
+==17127==    by 0x10AE50: std::__invoke_result<main::{lambda()#2}>::type std::__invoke<main::{lambda()#2}>(std::__invoke_result&&, (main::{lambda()#2}&&)...) (invoke.h:95)
+==17127==    by 0x10ADD1: void std::thread::_Invoker<std::tuple<main::{lambda()#2}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (thread:264)
+==17127==    by 0x10AD89: std::thread::_Invoker<std::tuple<main::{lambda()#2}> >::operator()() (thread:271)
+==17127==    by 0x10AD4D: std::thread::_State_impl<std::thread::_Invoker<std::tuple<main::{lambda()#2}> > >::_M_run() (thread:215)
+==17127==  Address 0x116360 is 32 bytes inside data symbol "Demo_DW"
+==17127== 
+==17127== 
+==17127== 176 errors in context 6 of 6:
+==17127== ----------------------------------------------------------------
+==17127== 
+==17127== Possible data race during read of size 8 at 0x116350 by thread #2
+==17127== Locks held: none
+==17127==    at 0x10F604: Gain_Normal_step (Demo.c:94)
+==17127==    by 0x10F80A: Demo_step (Demo.c:157)
+==17127==    by 0x10A3CE: main::{lambda()#1}::operator()() const (main.cpp:35)
+==17127==    by 0x10AF39: void std::__invoke_impl<void, main::{lambda()#1}>(std::__invoke_other, main::{lambda()#1}&&) (invoke.h:60)
+==17127==    by 0x10AEA3: std::__invoke_result<main::{lambda()#1}>::type std::__invoke<main::{lambda()#1}>(std::__invoke_result&&, (main::{lambda()#1}&&)...) (invoke.h:95)
+==17127==    by 0x10ADFD: void std::thread::_Invoker<std::tuple<main::{lambda()#1}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (thread:264)
+==17127==    by 0x10ADA5: std::thread::_Invoker<std::tuple<main::{lambda()#1}> >::operator()() (thread:271)
+==17127==    by 0x10AD6D: std::thread::_State_impl<std::thread::_Invoker<std::tuple<main::{lambda()#1}> > >::_M_run() (thread:215)
+==17127==    by 0x49A4C23: execute_native_thread_routine (thread.cc:80)
+==17127==    by 0x4841886: mythread_wrapper (hg_intercepts.c:387)
+==17127==    by 0x48BC3E8: start_thread (in /usr/lib/libpthread-2.32.so)
+==17127==    by 0x4D12292: clone (in /usr/lib/libc-2.32.so)
+==17127== 
+==17127== This conflicts with a previous write of size 8 by thread #3
+==17127== Locks held: none
+==17127==    at 0x10F7E5: Gain_Slow_step (Demo.c:150)
+==17127==    by 0x10F811: Demo_step (Demo.c:161)
+==17127==    by 0x10A44E: main::{lambda()#2}::operator()() const (main.cpp:48)
+==17127==    by 0x10AEEE: void std::__invoke_impl<void, main::{lambda()#2}>(std::__invoke_other, main::{lambda()#2}&&) (invoke.h:60)
+==17127==    by 0x10AE50: std::__invoke_result<main::{lambda()#2}>::type std::__invoke<main::{lambda()#2}>(std::__invoke_result&&, (main::{lambda()#2}&&)...) (invoke.h:95)
+==17127==    by 0x10ADD1: void std::thread::_Invoker<std::tuple<main::{lambda()#2}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (thread:264)
+==17127==    by 0x10AD89: std::thread::_Invoker<std::tuple<main::{lambda()#2}> >::operator()() (thread:271)
+==17127==    by 0x10AD4D: std::thread::_State_impl<std::thread::_Invoker<std::tuple<main::{lambda()#2}> > >::_M_run() (thread:215)
+==17127==  Address 0x116350 is 16 bytes inside data symbol "Demo_DW"
+==17127== 
+==17127== ERROR SUMMARY: 822 errors from 6 contexts (suppressed: 0 from 0)
